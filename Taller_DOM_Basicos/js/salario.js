@@ -11,6 +11,11 @@ function calcular() {
   }
 
   const salario = horas * valorHora;
-  document.getElementById("resultado").value =
-    "$ " + salario.toLocaleString("es-CO");
+  const formatoPesos = new Intl.NumberFormat("es-CO", {
+    style: "currency",
+    currency: "COP",
+    currencyDisplay: "code",
+    maximumFractionDigits: 0
+  });
+  document.getElementById("resultado").value = formatoPesos.format(salario);
 }
