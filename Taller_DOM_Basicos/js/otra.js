@@ -29,7 +29,12 @@ function calcularPresupuesto() {
   const propina = subtotal * (porcentajePropina / 100);
   const totalGeneral = subtotal + propina;
   const costoPorInvitado = totalGeneral / invitados;
-  const formatoDinero = (valor) => "$ " + valor.toLocaleString("es-CO");
+  const formatoDinero = new Intl.NumberFormat("es-CO", {
+    style: "currency",
+    currency: "COP",
+    currencyDisplay: "code",
+    maximumFractionDigits: 0
+  });
 
   const resultados = [
     comidaTotal,
@@ -43,6 +48,12 @@ function calcularPresupuesto() {
   ];
 
   document.querySelectorAll("tbody tr").forEach((fila, indice) => {
-    fila.children[1].textContent = formatoDinero(resultados[indice]);
+    fila.children[1].textContent = formatoDinero.format(resultados[indice]);
   });
 }
+
+document.querySelector("form").addEventListener("reset", () => {
+  document.querySelectorAll("tbody tr").forEach((fila) => {
+    fila.children[1].textContent = "";
+  });
+});
